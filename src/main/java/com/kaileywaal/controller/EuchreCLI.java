@@ -1,5 +1,6 @@
 package com.kaileywaal.controller;
 
+import com.kaileywaal.GameView;
 import com.kaileywaal.model.*;
 
 public class EuchreCLI {
@@ -14,32 +15,11 @@ public class EuchreCLI {
     private static Team[] teams;
 
     public static void main(String[] args) {
-            player1 = new HumanPlayer("P1");
-            player2 = new HumanPlayer("P2");
-            player3 = new ComputerPlayer("P3");
-            player4 = new HumanPlayer("P4");
-
-            Player[] team1Players = {player1, player2};
-            Player[] team2Players = {player3, player4};
-
-            team1 = new Team(team1Players, "Team 1");
-            team2 = new Team(team2Players, "Team 2");
-
-            teams = new Team[] {team1, team2};
-
-
-            Hand hand = new Hand(teams);
-            System.out.println("Dealer: " + Hand.getDealer());
-            Hand hand1 = new Hand(teams);
-            System.out.println("Dealer: " + Hand.getDealer());
-            Hand hand2 = new Hand(teams);
-            System.out.println("Dealer: " + Hand.getDealer());
-        Hand hand3 = new Hand(teams);
-        System.out.println("Dealer: " + Hand.getDealer());
-        Hand hand4 = new Hand(teams);
-        System.out.println("Dealer: " + Hand.getDealer());
-
-
+            GameView gameView = new GameView(System.in, System.out);
+            String[] testOptions = {"1", "2", "3"};
+            Object response = gameView.getChoiceFromOptions(testOptions);
+            System.out.println("Response was: " + response);
+            gameView.displayMessage("Sample message");
     }
 
 

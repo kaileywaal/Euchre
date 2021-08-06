@@ -39,7 +39,20 @@
       <recent name="com.kaileywaal.model" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.HandTest">
+  <component name="RunManager" selected="Application.EuchreCLI">
+    <configuration name="EuchreCLI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.kaileywaal.controller.EuchreCLI" />
+      <module name="Euchre" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.kaileywaal.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="HandTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Euchre" />
       <extension name="coverage">
@@ -51,22 +64,6 @@
       <option name="PACKAGE_NAME" value="com.kaileywaal.model" />
       <option name="MAIN_CLASS_NAME" value="com.kaileywaal.model.HandTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="HandTest.currentPlayer_should_return_player_after_dealer_when_hand_is_first_created" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Euchre" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.kaileywaal.model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.kaileywaal.model" />
-      <option name="MAIN_CLASS_NAME" value="com.kaileywaal.model.HandTest" />
-      <option name="METHOD_NAME" value="currentPlayer_should_return_player_after_dealer_when_hand_is_first_created" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -121,11 +118,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.EuchreCLI" />
         <item itemvalue="JUnit.HandTest" />
         <item itemvalue="JUnit.HandTest.setCurrentPlayer_should_set_current_player_to_correct_player" />
         <item itemvalue="JUnit.HandTest.moveToNextPlayer_should_set_current_player_to_correct_player" />
         <item itemvalue="JUnit.HandTest.moveToNextPlayer_should_return_next_player_in_loop" />
-        <item itemvalue="JUnit.HandTest.currentPlayer_should_return_player_after_dealer_when_hand_is_first_created" />
       </list>
     </recent_temporary>
   </component>

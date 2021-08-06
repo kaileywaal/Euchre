@@ -19,6 +19,10 @@ public class Team {
         return score;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void addToScore(int scoreToAdd) {
         this.score += scoreToAdd;
     }
