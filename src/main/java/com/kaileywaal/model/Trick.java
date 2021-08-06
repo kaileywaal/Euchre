@@ -18,11 +18,19 @@ public class Trick {
         if(cardsInPlay.isEmpty()) {
             leadingSuit = cardToPlay.getSuit();
         }
-
         cardsInPlay.put(cardToPlay, player);
     }
 
     public Player determineTrickWinner() {
+        // Make sure all 4 players have played their cards
+        if(cardsInPlay.size() != 4) {
+            try {
+                throw new Exception("Cannot determine winner until all players have played!");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         // Create hashmap to store players and their rank
         Map<Player, Integer> playerRanks = new HashMap<>();
 
