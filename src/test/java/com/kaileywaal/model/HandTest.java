@@ -110,4 +110,85 @@ public class HandTest {
 
         Assert.assertEquals(2, actual);
     }
+
+    @Test
+    public void moveToNextDealer_should_return_one_more_than_current_dealer_position() {
+        Hand hand = new Hand(teams);
+        Player[] players = hand.getPlayers();
+        int originalDealerPosition = 0;
+        for(int i = 0; i < players.length; i++) {
+            if(players[i].equals(Hand.getDealer())) {
+                originalDealerPosition = i;
+            }
+        }
+        int expected = originalDealerPosition == 3 ? 0 : originalDealerPosition + 1;
+        Hand hand1 = new Hand(teams);
+        int actual = 0;
+        for(int i = 0; i < players.length; i++) {
+            if(players[i].equals(Hand.getDealer())) {
+                actual = i;
+            }
+        }
+
+        Assert.assertEquals(expected, actual);
+
+    }
+
+    @Test
+    public void currentPlayer_should_return_player_after_dealer_when_hand_is_first_created() {
+        Hand hand = new Hand(teams);
+        Player dealer = Hand.getDealer();
+
+        Player[] players = hand.getPlayers();
+        int dealerPosition = 0;
+        for(int i = 0; i < players.length; i++) {
+            if(players[i].equals(Hand.getDealer())) {
+                dealerPosition = i;
+            }
+        }
+        int expectedCurrentPlayerPosition = dealerPosition == 3 ? 0 : dealerPosition + 1;
+        Player expectedCurrentPlayer = players[expectedCurrentPlayerPosition];
+        Player actualCurrentPlayer = hand.getCurrentPlayer();
+
+        Assert.assertEquals(expectedCurrentPlayer, actualCurrentPlayer);
+    }
+
+    @Test
+    public void moveToNextPlayer_should_return_next_player_in_loop() {
+        Hand hand = new Hand(teams);
+        Player currentPlayer = hand.getCurrentPlayer();
+        int currentPlayerPosition = hand.findPlayerPosition(currentPlayer);
+        int nextPlayerPosition = currentPlayerPosition == 3 ? 0 : currentPlayerPosition + 1;
+
+
+        Player expected = hand.getPlayers()[nextPlayerPosition];
+        Player actual = hand.moveToNextPlayer();
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void moveToNextPlayer_should_set_current_player_to_correct_player() {
+        Hand hand = new Hand(teams);
+        Player currentPlayer = hand.getCurrentPlayer();
+        int currentPlayerPosition = hand.findPlayerPosition(currentPlayer);
+        int nextPlayerPosition = currentPlayerPosition == 3 ? 0 : currentPlayerPosition + 1;
+        hand.moveToNextPlayer();
+
+        Player expected = hand.getPlayers()[nextPlayerPosition];
+        Player actual = hand.getCurrentPlayer();
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void setCurrentPlayer_should_set_current_player_to_correct_player() {
+        Hand hand = new Hand(teams);
+        Player currentPlayer = player3;
+        hand.setCurrentPlayer(player2);
+
+        Assert.assertEquals(hand.getCurrentPlayer(), player2);
+    }
+
+
 }

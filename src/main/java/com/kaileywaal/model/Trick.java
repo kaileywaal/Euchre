@@ -7,11 +7,15 @@ public class Trick {
 
     private Map<Card, Player> cardsInPlay;
     private String leadingSuit; // string that holds the value of the suit that led
-    private String trump;
+    private final String TRUMP;
 
     public Trick(String trump) {
         this.cardsInPlay = new HashMap<Card, Player>();
-        this.trump = trump;
+        this.TRUMP = trump;
+    }
+
+    public Map<Card, Player> getCardsInPlay() {
+        return cardsInPlay;
     }
 
     public void playCard(Player player, Card cardToPlay) {
@@ -35,7 +39,7 @@ public class Trick {
         Map<Player, Integer> playerRanks = new HashMap<>();
 
         for (Card card : cardsInPlay.keySet()) {
-            int cardRank = card.getCardScore(leadingSuit, trump);
+            int cardRank = card.getCardScore(leadingSuit, TRUMP);
             Player player = cardsInPlay.get(card);
             playerRanks.put(player, cardRank);
         }

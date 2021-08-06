@@ -9,6 +9,8 @@ public class Hand {
     private Player caller; // keeps track of the player who called the current trump card
     private final Card TOPCARD;
     private String trump;
+    private static Player dealer;
+    private Player currentPlayer;
 
 
     public Hand(Team[] teams) {
@@ -23,6 +25,10 @@ public class Hand {
         }
         this.players = playerList.toArray(new Player[4]);
         this.TOPCARD = deck.deal(this.players);
+
+        int dealerPosition = moveToNextDealer();
+        int currentPlayerPosition = dealerPosition + 1 > 3 ? 0 : dealerPosition + 1;
+        this.currentPlayer = players[currentPlayerPosition];
     }
 
     public String getTrump() {
@@ -32,6 +38,18 @@ public class Hand {
     public void setTrump(Player caller, String trump) {
         this.caller = caller;
         this.trump = trump;
+    }
+
+    public Player[] getPlayers() {
+        return players;
+    }
+
+    public static Player getDealer() {
+        return dealer;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
     }
 
     public Card getTopCard() {
@@ -95,6 +113,36 @@ public class Hand {
                 e.printStackTrace();
             }
         }
+    }
+
+    private int moveToNextDealer() {
+        int dealerPosition = findPlayerPosition(dealer);
+        int newDealerPosition = (dealerPosition == 3) ? 0 : dealerPosition + 1;
+        dealer = players[newDealerPosition];
+        return newDealerPosition;
+    }
+
+    public int findPlayerPosition(Player player) {
+        int playerPosition = 0;
+        for(int i = 0; i < players.length; i++) {
+            if(players[i].equals(player)){
+                playerPosition = i;
+            }
+        }
+        return playerPosition;
+    }
+
+    public Player moveToNextPlayer() {
+        // moves to next player in loop, returns new current player
+        int currentPlayerPosition = findPlayerPosition(currentPlayer);
+        int newPlayerPosition = (currentPlayerPosition == 3) ? 0 : currentPlayerPosition + 1;
+        currentPlayer = players[newPlayerPosition];
+        return currentPlayer;
+    }
+
+    public Player setCurrentPlayer(Player newCurrentPlayer) {
+        currentPlayer = newCurrentPlayer;
+        return getCurrentPlayer();
     }
 
 }
