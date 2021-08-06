@@ -15,8 +15,8 @@ public class PlayerTest {
 
     private final Card JACKOFSPADES = new Card("Spades", "Jack");
     private final Card JACKOFDIAMONDS = new Card("Diamonds", "Jack");
-    private final Card ACEOFSPADES = new Card("Spades", "Ace");
-    private final Card QUEENOFHEARTS = new Card("Hearts", "9");
+    private final Card NINEOFHEARTS = new Card("Hearts", "9");
+    private final Card QUEENOFHEARTS = new Card("Hearts", "Queen");
     private final Card ACEOFHEARTS = new Card("Hearts", "Ace");
 
     @Before
@@ -24,7 +24,7 @@ public class PlayerTest {
         PLAYER.dealCard(JACKOFSPADES);
         PLAYER.dealCard(JACKOFDIAMONDS);
         PLAYER.dealCard(ACEOFHEARTS);
-        PLAYER.dealCard(ACEOFSPADES);
+        PLAYER.dealCard(NINEOFHEARTS);
         PLAYER.dealCard(QUEENOFHEARTS);
     }
 
@@ -57,9 +57,15 @@ public class PlayerTest {
         cardsPlayed.add(nineOfDiamonds);
 
         List<Card> playableCards = PLAYER.getValidPlayableCards(cardsPlayed, "Hearts");
-        boolean actual = playableCards.contains(JACKOFDIAMONDS);
+        boolean playableCardsReturnsLeftHandWithTypicalSuit = false;
 
-        Assert.assertFalse(actual);
+        for(Card card: playableCards) {
+            if(card.getSuit().equals("Diamonds") && card.getRank().equals("9")) {
+                playableCardsReturnsLeftHandWithTypicalSuit = true;
+            }
+        }
+
+        Assert.assertFalse(playableCardsReturnsLeftHandWithTypicalSuit);
     }
 
     @Test

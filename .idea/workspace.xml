@@ -39,8 +39,8 @@
       <recent name="com.kaileywaal.model" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.DeckTest">
-    <configuration name="CardTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.TrickTest">
+    <configuration name="ComputerPlayerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Euchre" />
       <extension name="coverage">
         <pattern>
@@ -49,24 +49,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.kaileywaal.model" />
-      <option name="MAIN_CLASS_NAME" value="com.kaileywaal.model.CardTest" />
+      <option name="MAIN_CLASS_NAME" value="com.kaileywaal.model.ComputerPlayerTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CardTest.getLeftHandSuit_should_return_Diamonds_when_trump_is_Hearts" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Euchre" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.kaileywaal.model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.kaileywaal.model" />
-      <option name="MAIN_CLASS_NAME" value="com.kaileywaal.model.CardTest" />
-      <option name="METHOD_NAME" value="getLeftHandSuit_should_return_Diamonds_when_trump_is_Hearts" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -86,11 +70,59 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="PlayerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Euchre" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.kaileywaal.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.kaileywaal.model" />
+      <option name="MAIN_CLASS_NAME" value="com.kaileywaal.model.PlayerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PlayerTest.getValidPlayableCards_should_not_return_left_hand_jack_with_its_typical_suit" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Euchre" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.kaileywaal.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.kaileywaal.model" />
+      <option name="MAIN_CLASS_NAME" value="com.kaileywaal.model.PlayerTest" />
+      <option name="METHOD_NAME" value="getValidPlayableCards_should_not_return_left_hand_jack_with_its_typical_suit" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TrickTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Euchre" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.kaileywaal.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.kaileywaal.model" />
+      <option name="MAIN_CLASS_NAME" value="com.kaileywaal.model.TrickTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TrickTest" />
+        <item itemvalue="JUnit.ComputerPlayerTest" />
+        <item itemvalue="JUnit.PlayerTest" />
+        <item itemvalue="JUnit.PlayerTest.getValidPlayableCards_should_not_return_left_hand_jack_with_its_typical_suit" />
         <item itemvalue="JUnit.DeckTest" />
-        <item itemvalue="JUnit.CardTest" />
-        <item itemvalue="JUnit.CardTest.getLeftHandSuit_should_return_Diamonds_when_trump_is_Hearts" />
       </list>
     </recent_temporary>
   </component>

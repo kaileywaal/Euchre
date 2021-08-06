@@ -6,4 +6,5 @@ public class HumanPlayer extends Player {
         super(false, name);
     }
 
+
 }

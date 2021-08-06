@@ -34,15 +34,46 @@ public abstract class Player {
         hand.add(card);
     }
 
-    public List<Card> getValidPlayableCards(List<Card> cardsPlayed, String trump) {
-        // Returns list of cards that are allowed to be played based on what has already been played
-        // Make sure to include left hand suit as trump suit, not as its actual suit
-
-
-
-
-
-        return null;
+    public void removeCardFromHand(Card cardToRemove) {
+        hand.remove(cardToRemove);
     }
 
+    public List<Card> getValidPlayableCards(List<Card> cardsPlayed, String trump) {
+        // If nobody else has played a card, any card goes
+        if (cardsPlayed.isEmpty()) {
+            return getHand();
+        } else {
+            String leadingSuit = cardsPlayed.get(0).getSuit();
+            return getCardsThatFollowSuit(leadingSuit, trump);
+        }
+    }
+
+    private List<Card> getCardsThatFollowSuit(String leadingSuit, String trump){
+        List<Card> cardsThatFollowSuit = new ArrayList<Card>();
+        String leftHandSuit = Card.getLeftHandSuit(trump);
+
+        for (Card card : hand) {
+            String suit = card.getSuit();
+            String rank = card.getRank();
+
+            // Off suit Jack should be treated as the trump suit
+            if(rank.equals("Jack") && suit.equals(leftHandSuit)) {
+                suit = trump;
+            }
+
+            if (suit.equals(leadingSuit)) {
+                cardsThatFollowSuit.add(card);
+            }
+        }
+        return cardsThatFollowSuit.isEmpty() ? hand: cardsThatFollowSuit;
+    }
+
+    public void pickUpTopCard(Card topCard, Deck deck) {
+        hand.add(topCard);
+        deck.removeCard(topCard);
+        if(isComputer) {
+            // TODO: improve logic to have computer make informed decision about which card to put down
+            removeCardFromHand(hand.get(0));
+        }
+    }
 }
