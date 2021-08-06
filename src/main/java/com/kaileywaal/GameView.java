@@ -94,7 +94,7 @@ public class GameView {
         Team team1 = teams.get(0);
         Team team2 = teams.get(1);
         int team1TricksWon = teamTricksWon.get(team1);
-        int team2TricksWon = teamTricksWon.get(team2)
+        int team2TricksWon = teamTricksWon.get(team2);
         int tricksLeftInHand = 5 - team1TricksWon - team2TricksWon;
 
         out.println(team1.getName() + " has won " + team1TricksWon + (team1TricksWon > 1 ? " tricks" : " trick") + " in this hand.");
