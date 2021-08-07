@@ -12,6 +12,7 @@ public class ComputerPlayer extends Player{
 
     //TODO: improve computer logic
     // TODO: allow computer to see Jacks as off suit
+    @Override
     public boolean callTopCardAsTrump(Card topCard) {
         List<Card> hand = getHand();
         String suitToCall = topCard.getSuit();

@@ -13,21 +13,19 @@ public class Hand {
     private Player currentPlayer;
 
 
-    public Hand(Team[] teams) {
+    public Hand(Team[] teams, Player[] players) {
         this.teams = teams;
         Deck deck = new Deck();
 
-        List<Player> playerList = new ArrayList<>();
         for(Team team : teams) {
             tricksWonByTeam.put(team, 0);
-            Player[] playersInTeam = team.getPlayers();
-            Collections.addAll(playerList, playersInTeam);
         }
-        this.players = playerList.toArray(new Player[4]);
+        this.players = players;
         this.TOPCARD = deck.deal(this.players);
 
-        int dealerPosition = moveToNextDealer();
-        int currentPlayerPosition = dealerPosition + 1 > 3 ? 0 : dealerPosition + 1;
+        moveToNextDealer();
+        int dealerPosition = findPlayerPosition(dealer);
+        int currentPlayerPosition = (dealerPosition == 3) ? 0 : (dealerPosition + 1);
         this.currentPlayer = players[currentPlayerPosition];
     }
 
@@ -35,7 +33,7 @@ public class Hand {
         return trump;
     }
 
-    public void setTrump(Player caller, String trump) {
+    public void callTrump(Player caller, String trump) {
         this.caller = caller;
         this.trump = trump;
     }

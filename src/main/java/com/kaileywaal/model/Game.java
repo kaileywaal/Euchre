@@ -1,30 +1,31 @@
 package com.kaileywaal.model;
 
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Game {
-    private Player[] players;
-    private Team[] teams;
-    private Map<Team, Integer> teamScores;
+    private Player[] players = new Player[4];
+    private Team[] teams = new Team[2];
+    private Map<Team, Integer> teamScores = new HashMap<>();
 
     public Game(int numberOfHumanPlayers, String[] humanPlayerNames){
         // Add players based on how many human players there are
         int totalNumberOfPlayers = 4;
-        int numberOfComputerPlayers = totalNumberOfPlayers - numberOfHumanPlayers;
-        for(int i = 0; i < 4; i++) {
-            for (int j = 0; j < numberOfHumanPlayers; j++) {
-                Player player = new HumanPlayer(humanPlayerNames[j]);
-                players[i] = player;
-            }
-            for(int k = 0; k < numberOfComputerPlayers; k++) {
-                Player player = new ComputerPlayer("Computer " + (k + 1));
-                players[i] = player;
-            }
+        // Populate human players into players array
+        for (int i = 0; i < numberOfHumanPlayers; i++) {
+            Player player = new HumanPlayer(humanPlayerNames[i]);
+            players[i] = player;
+        }
+        // Populate remainder of players array with computer players
+        int computerNumber = 1;
+        for(int i = numberOfHumanPlayers; i < totalNumberOfPlayers; i++) {
+            Player player = new ComputerPlayer("Computer " + computerNumber);
+            computerNumber++;
+            players[i] = player;
         }
 
         // Add players to team
-        assert players != null;
         Player[] team1Players = {players[0], players[2]};
         Player[] team2Players = {players[1], players[3]};
         Team team1 = new Team(team1Players, "Team 1");

@@ -57,8 +57,25 @@ public class GameView {
         out.flush();
     }
 
+    public String getUserInput(String message) {
+        out.print(message + " >>> ");
+        out.flush();
+        return in.nextLine();
+    }
+
     public void displayMessage(String message) {
-        out.println(message + "\n");
+        out.println(message);
+    }
+
+    public void displayTopCardCalledTrump(Player player, Card topCard, boolean calledIt) {
+        if (!calledIt) {
+            out.println(player.getName() + " passed.");
+            out.flush();
+        } else {
+            out.println(player.getName() + " had the dealer pick up a " + topCard + ". ");
+            out.println(topCard.getSuit() + " is now trump.");
+            out.flush();
+        }
     }
 
     public void displayCardPlayed(Player player, Card cardPlayed) {
@@ -125,5 +142,6 @@ public class GameView {
         }
     }
 
-
+    // TODO: display teams
+    public void displayTeams(Team[] teams){}
 }

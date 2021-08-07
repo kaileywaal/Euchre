@@ -13,6 +13,8 @@ public class HandTest {
     private Player player3;
     private Player player4;
 
+    private Player[] players;
+
     private Team team1;
     private Team team2;
 
@@ -32,12 +34,14 @@ public class HandTest {
         team2 = new Team(team2Players, "Team 2");
 
         teams = new Team[] {team1, team2};
+
+        players = new Player[] {player1, player2, player3, player4};
     }
 
 
     @Test
     public void addPointToTeamThatWonTrick_should_update_points_for_correct_team() {
-        Hand hand = new Hand(teams);
+        Hand hand = new Hand(teams, players);
         Map<Team, Integer> teamPoints = hand.addPointToTeamThatWonTrick(player1);
 
         int actualTeam1Points = teamPoints.get(team1);
@@ -51,7 +55,7 @@ public class HandTest {
 
     @Test
     public void determineWinner_should_return_winning_team() {
-        Hand hand = new Hand(teams);
+        Hand hand = new Hand(teams, players);
         hand.addPointToTeamThatWonTrick(player1);
         hand.addPointToTeamThatWonTrick(player1);
         hand.addPointToTeamThatWonTrick(player1);
@@ -65,8 +69,8 @@ public class HandTest {
 
     @Test
     public void determineWinner_adds_1_point_to_winning_team_when_they_called_it_and_win_3_tricks() {
-        Hand hand = new Hand(teams);
-        hand.setTrump(player1, "Spades");
+        Hand hand = new Hand(teams, players);
+        hand.callTrump(player1, "Spades");
         hand.addPointToTeamThatWonTrick(player1);
         hand.addPointToTeamThatWonTrick(player1);
         hand.addPointToTeamThatWonTrick(player1);
@@ -81,8 +85,8 @@ public class HandTest {
 
     @Test
     public void determineWinner_adds_2_points_to_winning_team_when_they_call_it_and_win_5_tricks() {
-        Hand hand = new Hand(teams);
-        hand.setTrump(player1, "Spades");
+        Hand hand = new Hand(teams, players);
+        hand.callTrump(player1, "Spades");
         hand.addPointToTeamThatWonTrick(player1);
         hand.addPointToTeamThatWonTrick(player1);
         hand.addPointToTeamThatWonTrick(player1);
@@ -97,8 +101,8 @@ public class HandTest {
 
     @Test
     public void determineWinner_gives_winning_team_2_points_when_they_euchre() {
-        Hand hand = new Hand(teams);
-        hand.setTrump(player3, "Spades");
+        Hand hand = new Hand(teams, players);
+        hand.callTrump(player3, "Spades");
         hand.addPointToTeamThatWonTrick(player1);
         hand.addPointToTeamThatWonTrick(player1);
         hand.addPointToTeamThatWonTrick(player1);
@@ -113,7 +117,7 @@ public class HandTest {
 
     @Test
     public void moveToNextDealer_should_return_one_more_than_current_dealer_position() {
-        Hand hand = new Hand(teams);
+        Hand hand = new Hand(teams, players);
         Player[] players = hand.getPlayers();
         int originalDealerPosition = 0;
         for(int i = 0; i < players.length; i++) {
@@ -122,7 +126,7 @@ public class HandTest {
             }
         }
         int expected = originalDealerPosition == 3 ? 0 : originalDealerPosition + 1;
-        Hand hand1 = new Hand(teams);
+        Hand hand1 = new Hand(teams, players);
         int actual = 0;
         for(int i = 0; i < players.length; i++) {
             if(players[i].equals(Hand.getDealer())) {
@@ -136,7 +140,7 @@ public class HandTest {
 
     @Test
     public void currentPlayer_should_return_player_after_dealer_when_hand_is_first_created() {
-        Hand hand = new Hand(teams);
+        Hand hand = new Hand(teams, players);
         Player dealer = Hand.getDealer();
 
         Player[] players = hand.getPlayers();
@@ -155,7 +159,7 @@ public class HandTest {
 
     @Test
     public void moveToNextPlayer_should_return_next_player_in_loop() {
-        Hand hand = new Hand(teams);
+        Hand hand = new Hand(teams, players);
         Player currentPlayer = hand.getCurrentPlayer();
         int currentPlayerPosition = hand.findPlayerPosition(currentPlayer);
         int nextPlayerPosition = currentPlayerPosition == 3 ? 0 : currentPlayerPosition + 1;
@@ -169,7 +173,7 @@ public class HandTest {
 
     @Test
     public void moveToNextPlayer_should_set_current_player_to_correct_player() {
-        Hand hand = new Hand(teams);
+        Hand hand = new Hand(teams, players);
         Player currentPlayer = hand.getCurrentPlayer();
         int currentPlayerPosition = hand.findPlayerPosition(currentPlayer);
         int nextPlayerPosition = currentPlayerPosition == 3 ? 0 : currentPlayerPosition + 1;
@@ -183,7 +187,7 @@ public class HandTest {
 
     @Test
     public void setCurrentPlayer_should_set_current_player_to_correct_player() {
-        Hand hand = new Hand(teams);
+        Hand hand = new Hand(teams, players);
         Player currentPlayer = player3;
         hand.setCurrentPlayer(player2);
 

@@ -28,7 +28,10 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../workspace/kaileywaal/module-1/mod1-capstone-final/java" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="terminal" />
   </component>
   <component name="RecentsManager">
@@ -136,6 +139,20 @@
       <updated>1628121319163</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/com/kaileywaal/model/Game.java</url>
+          <line>11</line>
+          <properties class="com.kaileywaal.model.Game" method="&lt;init&gt;">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Euchre$CardTest.ic" NAME="CardTest Coverage Results" MODIFIED="1628189424265" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

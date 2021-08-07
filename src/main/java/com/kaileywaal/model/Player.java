@@ -68,12 +68,13 @@ public abstract class Player {
         return cardsThatFollowSuit.isEmpty() ? hand: cardsThatFollowSuit;
     }
 
-    public void pickUpTopCard(Card topCard, Deck deck) {
+    public void pickUpTopCard(Card topCard) {
         hand.add(topCard);
-        deck.removeCard(topCard);
         if(isComputer) {
             // TODO: improve logic to have computer make informed decision about which card to put down
             removeCardFromHand(hand.get(0));
         }
     }
+
+    public abstract boolean callTopCardAsTrump(Card topCard);
 }

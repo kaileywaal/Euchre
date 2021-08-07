@@ -7,4 +7,8 @@ public class HumanPlayer extends Player {
     }
 
 
+    @Override
+    public boolean callTopCardAsTrump(Card topCard) {
+        return false;
+    }
 }
