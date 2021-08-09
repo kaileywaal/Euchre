@@ -6,6 +6,7 @@ import java.util.Map;
 public class Trick {
 
     private Map<Card, Player> cardsInPlay;
+    private Card leadingCard;
     private String leadingSuit; // string that holds the value of the suit that led
     private final String TRUMP;
 
@@ -18,8 +19,17 @@ public class Trick {
         return cardsInPlay;
     }
 
+    public String getLeadingSuit() {
+        return leadingSuit;
+    }
+
+    public Card getLeadingCard() {
+        return leadingCard;
+    }
+
     public void playCard(Player player, Card cardToPlay) {
         if(cardsInPlay.isEmpty()) {
+            leadingCard = cardToPlay;
             leadingSuit = cardToPlay.getSuit();
         }
         cardsInPlay.put(cardToPlay, player);
@@ -59,12 +69,12 @@ public class Trick {
 
     public Card findCardPlayedByPlayer(Player player) {
         // Return player who scored the lowest ranking
-        Card winningCard = null;
+        Card cardPlayed = null;
         for (Map.Entry<Card, Player> entry : cardsInPlay.entrySet()) {
             if (entry.getValue().equals(player)) {
-                winningCard = entry.getKey();
+                cardPlayed = entry.getKey();
             }
         }
-        return winningCard;
+        return cardPlayed;
     }
 }

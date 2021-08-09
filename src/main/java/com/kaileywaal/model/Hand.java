@@ -21,6 +21,7 @@ public class Hand {
             tricksWonByTeam.put(team, 0);
         }
         this.players = players;
+        deck.shuffle();
         this.TOPCARD = deck.deal(this.players);
 
         moveToNextDealer();
@@ -52,6 +53,10 @@ public class Hand {
 
     public Card getTopCard() {
         return TOPCARD;
+    }
+
+    public Map<Team, Integer> getTricksWonByTeam() {
+        return tricksWonByTeam;
     }
 
     public Map<Team, Integer> addPointToTeamThatWonTrick(Player winningPlayer) {

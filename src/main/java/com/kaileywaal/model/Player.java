@@ -38,19 +38,25 @@ public abstract class Player {
         hand.remove(cardToRemove);
     }
 
-    public List<Card> getValidPlayableCards(List<Card> cardsPlayed, String trump) {
+
+    public List<Card> getValidPlayableCards(Card leadingCard, String trump) {
         // If nobody else has played a card, any card goes
-        if (cardsPlayed.isEmpty()) {
+        if (leadingCard == null) {
             return getHand();
         } else {
-            String leadingSuit = cardsPlayed.get(0).getSuit();
-            return getCardsThatFollowSuit(leadingSuit, trump);
+            return getCardsThatFollowSuit(leadingCard, trump);
         }
     }
 
-    private List<Card> getCardsThatFollowSuit(String leadingSuit, String trump){
+    private List<Card> getCardsThatFollowSuit(Card leadingCard, String trump){
+        String leadingSuit = leadingCard.getSuit();
         List<Card> cardsThatFollowSuit = new ArrayList<Card>();
         String leftHandSuit = Card.getLeftHandSuit(trump);
+
+        // If left hand Jack leads, show the trump suit
+        if(leadingCard.getSuit().equals(leftHandSuit) && leadingCard.getRank().equals("Jack")) {
+            leadingSuit = trump;
+        }
 
         for (Card card : hand) {
             String suit = card.getSuit();
@@ -77,4 +83,6 @@ public abstract class Player {
     }
 
     public abstract boolean callTopCardAsTrump(Card topCard);
+    public abstract String callTrumpOrPass(String passedSuit, boolean isStuck);
+    public abstract Card playCard(Card leadingCard, String trump);
 }

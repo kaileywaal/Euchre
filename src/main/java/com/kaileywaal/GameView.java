@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+// TODO: ADD WAIT TIME SO IT'S MORE LIKE PLAYING IN REAL TIME
+
+
 public class GameView {
     private PrintWriter out;
     private Scanner in;
@@ -65,21 +68,33 @@ public class GameView {
 
     public void displayMessage(String message) {
         out.println(message);
+        out.flush();
     }
 
     public void displayTopCardCalledTrump(Player player, Card topCard, boolean calledIt) {
-        if (!calledIt) {
+        if(!calledIt) {
             out.println(player.getName() + " passed.");
             out.flush();
         } else {
             out.println(player.getName() + " had the dealer pick up a " + topCard + ". ");
-            out.println(topCard.getSuit() + " is now trump.");
+            out.println(topCard.getSuit() + " is now trump.\n");
             out.flush();
         }
     }
 
-    public void displayCardPlayed(Player player, Card cardPlayed) {
+    public void displayPlayerCalledTrump(Player player, String trump) {
+        if(trump == null) {
+            out.println(player.getName() + " passed.");
+            out.flush();
+        } else {
+            out.println(player.getName() + " called " + trump + ".");
+            out.println(trump + " is now trump.\n");
+        }
+    }
+
+    public void displayCardPlayedByPlayer(Player player, Card cardPlayed) {
         out.println(player.getName() + " played a " + cardPlayed + ".");
+        out.flush();
     }
 
     public void displayAllCardsPlayed(List<Card> cardsPlayed) {
@@ -95,6 +110,7 @@ public class GameView {
                 out.println(" have been played.");
             }
         }
+        out.flush();
     }
 
     public void displayPlayerCards(Player player) {
@@ -102,7 +118,7 @@ public class GameView {
     }
 
     public void displayTrickWinner(Player trickWinner, Card winningCard, Map<Team, Integer> teamTricksWon) {
-        out.println(trickWinner + " won the trick with a " + winningCard + ".");
+        out.println(trickWinner + " won the trick with a " + winningCard + ".\n");
         List<Team> teams = new ArrayList<>();
         for(Team team : teamTricksWon.keySet()) {
             teams.add(team);
@@ -114,11 +130,12 @@ public class GameView {
         int team2TricksWon = teamTricksWon.get(team2);
         int tricksLeftInHand = 5 - team1TricksWon - team2TricksWon;
 
-        out.println(team1.getName() + " has won " + team1TricksWon + (team1TricksWon > 1 ? " tricks" : " trick") + " in this hand.");
-        out.println(team2.getName() + " has won " + team2TricksWon + (team2TricksWon > 1 ? " tricks" : " trick") + " in this hand.");
+        out.println(team1.getName() + " has won " + team1TricksWon + (team1TricksWon == 1 ? " trick" : " tricks") + " in this hand.");
+        out.println(team2.getName() + " has won " + team2TricksWon + (team2TricksWon == 1 ? " trick" : " tricks") + " in this hand.");
         if(tricksLeftInHand != 0) {
-            out.println("There " + ((tricksLeftInHand == 1) ? "is " : "are ") + tricksLeftInHand + "tricks left to play in this hand.");
+            out.println("There " + ((tricksLeftInHand == 1) ? "is " : "are ") + tricksLeftInHand + ((tricksLeftInHand == 1) ? " trick " : " tricks ") +" left to play in this hand.\n");
         }
+        out.flush();
     }
 
     public void displayHandWinner(Team winningTeam, int points, int numberOfTricksWon, Player caller) {

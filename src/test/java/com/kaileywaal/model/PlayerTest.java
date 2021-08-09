@@ -10,6 +10,8 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+// FIXME : fix tests
+
 public class PlayerTest {
     private final Player PLAYER = new HumanPlayer("Test");
 
@@ -30,9 +32,7 @@ public class PlayerTest {
 
     @Test
     public void getValidPlayableCards_should_return_full_hand_when_nobody_else_has_played() {
-        List<Card> cardsPlayed = new ArrayList<>();
-
-        int actual =  PLAYER.getValidPlayableCards(cardsPlayed, "Spades").size();
+        int actual =  PLAYER.getValidPlayableCards(null, "Spades").size();
         int expected = 5;
 
         Assert.assertEquals(actual, expected);
@@ -40,11 +40,9 @@ public class PlayerTest {
 
     @Test
     public void getValidPlayableCards_should_return_left_hand_jack_when_trump_suit_leads() {
-        List<Card> cardsPlayed = new ArrayList<>();
         Card nineOfHearts = new Card("Hearts", "9");
-        cardsPlayed.add(nineOfHearts);
 
-        List<Card> playableCards = PLAYER.getValidPlayableCards(cardsPlayed, "Hearts");
+        List<Card> playableCards = PLAYER.getValidPlayableCards(nineOfHearts, "Hearts");
         boolean actual = playableCards.contains(JACKOFDIAMONDS);
 
         Assert.assertTrue(actual);
@@ -52,11 +50,9 @@ public class PlayerTest {
 
     @Test
     public void getValidPlayableCards_should_not_return_left_hand_jack_with_its_typical_suit() {
-        List<Card> cardsPlayed = new ArrayList<>();
         Card nineOfDiamonds = new Card("Diamonds", "9");
-        cardsPlayed.add(nineOfDiamonds);
 
-        List<Card> playableCards = PLAYER.getValidPlayableCards(cardsPlayed, "Hearts");
+        List<Card> playableCards = PLAYER.getValidPlayableCards(nineOfDiamonds, "Hearts");
         boolean playableCardsReturnsLeftHandWithTypicalSuit = false;
 
         for(Card card: playableCards) {
@@ -70,21 +66,38 @@ public class PlayerTest {
 
     @Test
     public void getValidPlayableCards_should_only_return_cards_that_follow_suit() {
-        List<Card> cardsPlayed = new ArrayList<>();
         Card nineOfSpades = new Card("Spades", "9");
-        cardsPlayed.add(nineOfSpades);
 
-        List<Card> playableCards = PLAYER.getValidPlayableCards(cardsPlayed, "Hearts");
+        List<Card> playableCards = PLAYER.getValidPlayableCards(nineOfSpades, "Hearts");
         boolean cardFoundThatDoesNotFollowSuit = false;
 
         for(Card card: playableCards) {
-            if(!card.getSuit().equals("Spades")) {
+            if (!card.getSuit().equals("Spades")) {
                 cardFoundThatDoesNotFollowSuit = true;
+                break;
             }
         }
 
 
-        Assert.assertEquals(2, playableCards.size());
+        Assert.assertEquals(1, playableCards.size());
         Assert.assertFalse(cardFoundThatDoesNotFollowSuit);
+    }
+
+    @Test
+    public void getValidPlayableCards_returns_trump_cards_when_off_suit_jack_leads() {
+        Card jackOfHearts = new Card("Hearts", "Jack");
+
+        List<Card> playableCards = PLAYER.getValidPlayableCards(jackOfHearts, "Diamonds");
+
+        boolean cardFoundThatDoesNotFollowSuit = false;
+        for(Card card: playableCards) {
+            if (!card.getSuit().equals("Diamonds")) {
+                cardFoundThatDoesNotFollowSuit = true;
+                break;
+            }
+        }
+
+        Assert.assertFalse(cardFoundThatDoesNotFollowSuit);
+        Assert.assertEquals(1, playableCards.size());
     }
 }

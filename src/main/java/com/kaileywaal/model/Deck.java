@@ -38,7 +38,6 @@ public class Deck {
     }
 
     public Card deal(Player[] playersToDealTo) {
-        shuffle();
         // Deal 5 cards to each player in the game
         for (int i = 0; i < 5; i++) {
             for (Player player : playersToDealTo) {

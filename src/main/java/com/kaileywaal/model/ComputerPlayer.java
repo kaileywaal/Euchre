@@ -25,6 +25,8 @@ public class ComputerPlayer extends Player{
         return numberOfSuit >= 3;
     }
 
+    //TODO: improve this logic - possibly add something to score highest suit based on values?
+    // TODO: improve this so that right hand suit is included in count
     public String callTrumpOrPass(String passedSuit, boolean isStuck) {
         List<Card> cards = getHand();
         Map<String, Integer> suitsMap = new HashMap<>();
@@ -42,7 +44,7 @@ public class ComputerPlayer extends Player{
         String highestSuit = determineHighestSuit(suitsMap, passedSuit);
 
         if (isStuck)  { return highestSuit; }
-        else if (suitsMap.get(highestSuit) >= 3) { return highestSuit; }
+        else if (suitsMap.get(highestSuit) >= 4) { return highestSuit; }
         return null;
     }
 
@@ -63,8 +65,8 @@ public class ComputerPlayer extends Player{
     }
 
     //TODO: Improve computer logic for card choice
-    public Card playCard(List<Card> cardsPlayed, String trump) {
-        List<Card> validCardOptions = getValidPlayableCards(cardsPlayed, trump);
+    public Card playCard(Card leadingCard, String trump) {
+        List<Card> validCardOptions = getValidPlayableCards(leadingCard, trump);
         Card cardToPlay = validCardOptions.get(0);
         getHand().remove(cardToPlay);
         return cardToPlay;

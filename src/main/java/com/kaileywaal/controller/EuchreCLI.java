@@ -3,6 +3,11 @@ package com.kaileywaal.controller;
 import com.kaileywaal.GameView;
 import com.kaileywaal.model.*;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class EuchreCLI {
     private GameView view;
     private Game game;
@@ -25,6 +30,10 @@ public class EuchreCLI {
         while(game.shouldContinue()) {
             playHand();
         }
+
+        //TODO: add print winner message once a team reaches 10 points
+
+        //TODO: add thanks for playing message + ask if they'd like to play again
     }
 
     private int getNumberOfHumanPlayers() {
@@ -49,18 +58,18 @@ public class EuchreCLI {
         boolean called = callTopCardAsTrump(hand);
         // if they all pass, ask each player if they want to call trump
         if(!called) {
-            // CODE TO ASK EACH PLAYER IF THEY WANT TO CALL TRUMP
+            callTrump(hand);
         }
-
         // once trump has been called, play 5 tricks
-
-        // update score after each trick
-
-        // determine winner after all 5 tricks are played
-
+        for(int i = 0; i < 5; i++) {
+            playTrick(hand);
+        }
+        hand.determineWinner();
+        // TODO: add score update and display winner of hand method
     }
 
     private boolean callTopCardAsTrump(Hand hand) {
+        // Returns true if someone calls it, otherwise return false
 
         Card topCard = hand.getTopCard();
         Player dealer = Hand.getDealer();
@@ -79,6 +88,7 @@ public class EuchreCLI {
                     return true;
                 }
             } else {
+                view.displayMessage("\nYour turn, " + currentPlayer.getName() + "!");
                 view.displayPlayerCards(currentPlayer);
                 view.displayMessage("Would you like " + dealer.getName() + " to pick up the " + topCard + "?");
                 String choice = (String) view.getChoiceFromOptions(options);
@@ -94,14 +104,108 @@ public class EuchreCLI {
             view.displayTopCardCalledTrump(currentPlayer, topCard, false);
             hand.moveToNextPlayer();
         }
+        // once trump is called, set current player to the player after the dealer
+        hand.setCurrentPlayer(dealer);
+        hand.moveToNextPlayer();
         // If code gets to this point, nobody has called it
         return false;
     }
 
+    private void callTrump(Hand hand) {
+        Player dealer = Hand.getDealer();
+        String passedSuit = hand.getTopCard().getSuit();
+        String trump;
+        view.displayMessage("\nEveryone passed on the " + hand.getTopCard() + ".\n");
 
 
+        for(int i = 0; i < 4; i++) {
+            Player currentPlayer = hand.getCurrentPlayer();
+            boolean isStuck = currentPlayer.equals(dealer);
+            if(currentPlayer.isComputer()) {
+                trump = currentPlayer.callTrumpOrPass(passedSuit, isStuck);
+                view.displayPlayerCalledTrump(currentPlayer, trump);
+                if(trump != null) {
+                    hand.callTrump(currentPlayer, trump);
+                    hand.moveToNextPlayer();
+                    break;
+                }
+            }
+            else {
+                view.displayMessage("\nYour turn, " + currentPlayer.getName() + "!");
+                if(isStuck) {
+                    view.displayMessage("You are stuck, so you must call trump");
+                    view.displayMessage("You flipped over a " + passedSuit + ", so " + passedSuit + "cannot be trump");
+                } else {
+                    view.displayMessage(dealer.getName() + " flipped over a " + passedSuit + ", so " + passedSuit + " cannot be trump");
+                }
+                view.displayPlayerCards(currentPlayer);
+                view.displayMessage("Which suit would you like to be trump?");
+                String response = (String) view.getChoiceFromOptions(getSuitOptions(passedSuit, isStuck));
+                if(response.equals("Pass, please!")) {
+                    response = null;
+                }
+                view.displayPlayerCalledTrump(currentPlayer, response);
+                if(response != null) {
+                    hand.callTrump(currentPlayer, response);
+                    hand.moveToNextPlayer();
+                    break;
+                }
+            }
+            hand.moveToNextPlayer();
+        }
+        // once trump is called, set current player to the player after the dealer
+        hand.setCurrentPlayer(dealer);
+        hand.moveToNextPlayer();
+    }
 
+    private String[] getSuitOptions(String passedSuit, boolean isStuck) {
+        String[] suits = Deck.getSuits();
+        List<String> validSuits = new ArrayList<>();
+        for(String suit: suits) {
+            if(!suit.equals(passedSuit)) {
+                validSuits.add(suit);
+            }
+        }
 
+        // if the player is not the dealer, they have the option to pass
+        if(!isStuck) {
+            validSuits.add("Pass, please!");
+        }
+
+        return validSuits.toArray(new String[validSuits.size()]);
+    }
+
+    private void playTrick(Hand hand) {
+        Trick trick = new Trick(hand.getTrump());
+        // loop through 4 players
+        for(int i = 0; i < 4; i++) {
+            Player currentPlayer = hand.getCurrentPlayer();
+            List<Card> cardsInPlay = new ArrayList<>(trick.getCardsInPlay().keySet());
+            if(currentPlayer.isComputer()) {
+                Card cardPlayed = currentPlayer.playCard(trick.getLeadingCard(), hand.getTrump());
+                trick.playCard(currentPlayer, cardPlayed);
+                view.displayCardPlayedByPlayer(currentPlayer, trick.findCardPlayedByPlayer(currentPlayer));
+            }
+            else {
+                view.displayMessage("Your turn, " + currentPlayer.getName());
+                if(!cardsInPlay.isEmpty()) {
+                    view.displayMessage(trick.getLeadingSuit() + " led, so if you have any " + trick.getLeadingSuit() + " you must play one.");
+                }
+                view.displayAllCardsPlayed(cardsInPlay);
+                view.displayMessage("What would you like to play?");
+                List<Card> validPlayableCards = currentPlayer.getValidPlayableCards(trick.getLeadingCard(), hand.getTrump());
+                Card choice = (Card) view.getChoiceFromOptions(validPlayableCards.toArray(new Object[validPlayableCards.size()]));
+                trick.playCard(currentPlayer, choice);
+                currentPlayer.removeCardFromHand(choice);
+                view.displayCardPlayedByPlayer(currentPlayer, choice);
+            }
+            hand.moveToNextPlayer();
+        }
+        Player winner = trick.determineTrickWinner();
+        hand.addPointToTeamThatWonTrick(winner);
+        view.displayTrickWinner(winner, trick.findCardPlayedByPlayer(winner), hand.getTricksWonByTeam());
+        hand.setCurrentPlayer(winner);
+    }
 
 
     public static void main(String[] args) {
