@@ -59,6 +59,14 @@ public class Hand {
         return tricksWonByTeam;
     }
 
+    public int getTricksWonByTeam(Team team) {
+        return tricksWonByTeam.get(team);
+    }
+
+    public Player getCaller() {
+        return caller;
+    }
+
     public Map<Team, Integer> addPointToTeamThatWonTrick(Player winningPlayer) {
         // Determine which team the winning player was on
         Team winningTeam = null;
@@ -81,13 +89,14 @@ public class Hand {
     public Team determineWinner() {
         makeSureAllTricksWerePlayed();
         Team winner = tricksWonByTeam.get(teams[0]) > tricksWonByTeam.get(teams[1]) ? teams[0] : teams[1];
-        addPointsToHandWinner(winner);
         return winner;
     }
 
-    private void addPointsToHandWinner(Team winningTeam) {
+    // returns number of points to add
+    public int addPointsToHandWinner(Team winningTeam) {
         int tricksWonByWinningTeam = tricksWonByTeam.get(winningTeam);
         boolean winningTeamCalledTrump = false;
+        int pointsToAdd;
 
         for(Player player: winningTeam.getPlayers()) {
             if (player.equals(caller)) {
@@ -97,11 +106,13 @@ public class Hand {
         }
         // if the winning team didn't call it, OR if the winning team called it an won all 5 tricks, they get 2 points
         if(!winningTeamCalledTrump || tricksWonByWinningTeam == 5) {
-            winningTeam.addToScore(2);
+            pointsToAdd = 2;
         }
         else {
-            winningTeam.addToScore(1);
+            pointsToAdd = 1;
         }
+        winningTeam.addToScore(pointsToAdd);
+        return pointsToAdd;
     }
 
     private void makeSureAllTricksWerePlayed() {

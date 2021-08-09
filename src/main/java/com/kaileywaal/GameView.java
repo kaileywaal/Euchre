@@ -133,14 +133,14 @@ public class GameView {
         out.println(team1.getName() + " has won " + team1TricksWon + (team1TricksWon == 1 ? " trick" : " tricks") + " in this hand.");
         out.println(team2.getName() + " has won " + team2TricksWon + (team2TricksWon == 1 ? " trick" : " tricks") + " in this hand.");
         if(tricksLeftInHand != 0) {
-            out.println("There " + ((tricksLeftInHand == 1) ? "is " : "are ") + tricksLeftInHand + ((tricksLeftInHand == 1) ? " trick " : " tricks ") +" left to play in this hand.\n");
+            out.println("There " + ((tricksLeftInHand == 1) ? "is " : "are ") + tricksLeftInHand + ((tricksLeftInHand == 1) ? " trick" : " tricks") + " left to play in this hand.\n");
         }
         out.flush();
     }
 
     public void displayHandWinner(Team winningTeam, int points, int numberOfTricksWon, Player caller) {
-        out.println(winningTeam + " won the hand with " + numberOfTricksWon + "tricks won.");
-        out.println("Since " + caller + "called trump, " + winningTeam + " earned " + points + " points.\n");
+        out.println("\n" +winningTeam.getName() + " won the hand with " + numberOfTricksWon + " tricks won.");
+        out.println("Since " + caller + " called trump, " + winningTeam.getName() + " earned " + points + " points.\n");
     }
 
     public void displayScoreUpdate(Team[] teams) {
@@ -159,6 +159,27 @@ public class GameView {
         }
     }
 
-    // TODO: display teams
-    public void displayTeams(Team[] teams){}
+    public void displayTeams(Team[] teams){
+        out.print("\n");
+        for (Team team: teams) {
+            Player[] players = team.getPlayers();
+            out.println(team.getName() + ": " + players[0] + " & " + players[1]);
+        }
+        out.flush();
+    }
+
+    public void displayTeammate(Player currentPlayer, Team[] teams) {
+        Player teammate = null;
+        for(Team team: teams) {
+            if(team.getTeammate(currentPlayer) != null) {
+                teammate = team.getTeammate(currentPlayer);
+            }
+        }
+        out.println("As a reminder, your teammate is " + teammate + ".");
+        out.flush();
+    }
+
+    public void displayTrump(String trump) {
+        out.println("Trump is " + trump + ".");
+    }
 }

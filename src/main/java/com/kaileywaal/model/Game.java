@@ -52,7 +52,9 @@ public class Game {
         return teamScores;
     }
 
-
+    public int getTeamScores(Team team) {
+        return teamScores.get(team);
+    }
 
     public boolean shouldContinue() {
         boolean shouldContinue = true;

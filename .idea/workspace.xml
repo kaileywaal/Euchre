@@ -42,7 +42,7 @@
       <recent name="com.kaileywaal.model" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.PlayerTest.getValidPlayableCards_returns_trump_cards_when_off_suit_jack_leads">
+  <component name="RunManager" selected="Application.EuchreCLI">
     <configuration name="EuchreCLI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.kaileywaal.controller.EuchreCLI" />
       <module name="Euchre" />
@@ -121,11 +121,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.EuchreCLI" />
         <item itemvalue="JUnit.PlayerTest.getValidPlayableCards_returns_trump_cards_when_off_suit_jack_leads" />
         <item itemvalue="JUnit.PlayerTest" />
         <item itemvalue="JUnit.PlayerTest.getValidPlayableCards_should_return_left_hand_jack_when_trump_suit_leads" />
         <item itemvalue="JUnit.PlayerTest.getValidPlayableCards_should_return_full_hand_when_nobody_else_has_played" />
-        <item itemvalue="Application.EuchreCLI" />
       </list>
     </recent_temporary>
   </component>

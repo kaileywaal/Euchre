@@ -26,6 +26,7 @@ public class EuchreCLI {
         game = new Game(numberOfHumanPlayers, namesOfPlayers);
         teams = game.getTeams();
         players = game.getPlayers();
+        view.displayTeams(teams);
 
         while(game.shouldContinue()) {
             playHand();
@@ -62,10 +63,14 @@ public class EuchreCLI {
         }
         // once trump has been called, play 5 tricks
         for(int i = 0; i < 5; i++) {
-            playTrick(hand);
+            playTrick(hand, i);
         }
-        hand.determineWinner();
-        // TODO: add score update and display winner of hand method
+        Team winner = hand.determineWinner();
+        int points = hand.addPointsToHandWinner(winner);
+        int tricksWon = hand.getTricksWonByTeam(winner);
+        Player caller = hand.getCaller();
+        view.displayHandWinner(winner, points, tricksWon, caller);
+        view.displayScoreUpdate(teams);
     }
 
     private boolean callTopCardAsTrump(Hand hand) {
@@ -91,6 +96,7 @@ public class EuchreCLI {
                 view.displayMessage("\nYour turn, " + currentPlayer.getName() + "!");
                 view.displayPlayerCards(currentPlayer);
                 view.displayMessage("Would you like " + dealer.getName() + " to pick up the " + topCard + "?");
+                view.displayTeammate(currentPlayer, teams);
                 String choice = (String) view.getChoiceFromOptions(options);
 
                 if(choice.equals("Yes")) {
@@ -175,7 +181,7 @@ public class EuchreCLI {
         return validSuits.toArray(new String[validSuits.size()]);
     }
 
-    private void playTrick(Hand hand) {
+    private void playTrick(Hand hand, int trickNumber) {
         Trick trick = new Trick(hand.getTrump());
         // loop through 4 players
         for(int i = 0; i < 4; i++) {
@@ -187,11 +193,14 @@ public class EuchreCLI {
                 view.displayCardPlayedByPlayer(currentPlayer, trick.findCardPlayedByPlayer(currentPlayer));
             }
             else {
-                view.displayMessage("Your turn, " + currentPlayer.getName());
+                view.displayMessage("\nYour turn, " + currentPlayer.getName());
                 if(!cardsInPlay.isEmpty()) {
+                    // TODO: Fix so that if leading card is left hand jack, it displays trump suit as leading suit
                     view.displayMessage(trick.getLeadingSuit() + " led, so if you have any " + trick.getLeadingSuit() + " you must play one.");
                 }
                 view.displayAllCardsPlayed(cardsInPlay);
+                view.displayTeammate(currentPlayer, teams);
+                view.displayTrump(hand.getTrump());
                 view.displayMessage("What would you like to play?");
                 List<Card> validPlayableCards = currentPlayer.getValidPlayableCards(trick.getLeadingCard(), hand.getTrump());
                 Card choice = (Card) view.getChoiceFromOptions(validPlayableCards.toArray(new Object[validPlayableCards.size()]));
@@ -203,7 +212,10 @@ public class EuchreCLI {
         }
         Player winner = trick.determineTrickWinner();
         hand.addPointToTeamThatWonTrick(winner);
-        view.displayTrickWinner(winner, trick.findCardPlayedByPlayer(winner), hand.getTricksWonByTeam());
+        // Display number of tricks won except for on last trick in hand
+        if(trickNumber != 4) {
+            view.displayTrickWinner(winner, trick.findCardPlayedByPlayer(winner), hand.getTricksWonByTeam());
+        }
         hand.setCurrentPlayer(winner);
     }
 

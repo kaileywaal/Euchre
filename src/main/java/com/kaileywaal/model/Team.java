@@ -31,4 +31,17 @@ public class Team {
         return name + " players: " + players[0] + ", " + players[1];
     }
 
+    public Player getTeammate(Player searchPlayer) {
+        Player teammate = null;
+        for(Player player : players) {
+            if (player.equals(searchPlayer)) {
+                for(Player playername: players) {
+                    if (!playername.equals(searchPlayer)) {
+                        teammate = playername;
+                    }
+                }
+            }
+        }
+        return teammate;
+    }
 }
