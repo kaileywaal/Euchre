@@ -12,9 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-// TODO: ADD WAIT TIME SO IT'S MORE LIKE PLAYING IN REAL TIME
-
-
 public class GameView {
     private PrintWriter out;
     private Scanner in;
@@ -67,11 +64,15 @@ public class GameView {
     }
 
     public void displayMessage(String message) {
+        delay();
         out.println(message);
         out.flush();
     }
 
     public void displayTopCardCalledTrump(Player player, Card topCard, boolean calledIt) {
+        if(player.isComputer()) {
+            delay();
+        }
         if(!calledIt) {
             out.println(player.getName() + " passed.");
             out.flush();
@@ -83,6 +84,9 @@ public class GameView {
     }
 
     public void displayPlayerCalledTrump(Player player, String trump) {
+        if(player.isComputer()) {
+            delay();
+        }
         if(trump == null) {
             out.println(player.getName() + " passed.");
             out.flush();
@@ -93,6 +97,9 @@ public class GameView {
     }
 
     public void displayCardPlayedByPlayer(Player player, Card cardPlayed) {
+        if(player.isComputer()) {
+            delay();
+        }
         out.println(player.getName() + " played a " + cardPlayed + ".");
         out.flush();
     }
@@ -118,6 +125,7 @@ public class GameView {
     }
 
     public void displayTrickWinner(Player trickWinner, Card winningCard, Map<Team, Integer> teamTricksWon) {
+        delay();
         out.println(trickWinner + " won the trick with a " + winningCard + ".\n");
         List<Team> teams = new ArrayList<>();
         for(Team team : teamTricksWon.keySet()) {
@@ -139,11 +147,13 @@ public class GameView {
     }
 
     public void displayHandWinner(Team winningTeam, int points, int numberOfTricksWon, Player caller) {
+        delay();
         out.println("\n" +winningTeam.getName() + " won the hand with " + numberOfTricksWon + " tricks won.");
         out.println("Since " + caller + " called trump, " + winningTeam.getName() + " earned " + points + " points.\n");
     }
 
     public void displayScoreUpdate(Team[] teams) {
+        delay();
         int team1Score = teams[0].getScore();
         int team2Score = teams[1].getScore();
 
@@ -181,5 +191,21 @@ public class GameView {
 
     public void displayTrump(String trump) {
         out.println("Trump is " + trump + ".");
+    }
+
+    public void displayGameWinner(Team winner, Team[] teams) {
+        Player[] winningPlayers = winner.getPlayers();
+        out.println(winner.getName() + "(" + winningPlayers[0] + " and " + winningPlayers[1] + ") won the game!");
+        out.println("Final Score: ");
+        out.println(teams[0] + ": " + teams[0].getScore());
+        out.println(teams[1] + ": " + teams[1].getScore());
+    }
+
+    private void delay() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

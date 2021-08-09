@@ -67,5 +67,10 @@ public class Game {
         return shouldContinue;
     }
 
+    public Team getGameWinner() {
+        Team winner = teams[0].getScore() > teams[1].getScore() ? teams[0] : teams[1];
+        return winner;
+    }
+
 }
 

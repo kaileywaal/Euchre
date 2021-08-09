@@ -19,22 +19,30 @@ public class EuchreCLI {
     }
 
     public void play() {
+        boolean continuePlaying = true;
         // ALL CODE TO RUN PROJECT GOES HERE
         view.displayMessage("Welcome to Euchre! \n");
-        int numberOfHumanPlayers = getNumberOfHumanPlayers();
-        String[] namesOfPlayers = getNamesOfPlayers(numberOfHumanPlayers);
-        game = new Game(numberOfHumanPlayers, namesOfPlayers);
-        teams = game.getTeams();
-        players = game.getPlayers();
-        view.displayTeams(teams);
 
-        while(game.shouldContinue()) {
-            playHand();
+        while(continuePlaying) {
+            int numberOfHumanPlayers = getNumberOfHumanPlayers();
+            String[] namesOfPlayers = getNamesOfPlayers(numberOfHumanPlayers);
+            game = new Game(numberOfHumanPlayers, namesOfPlayers);
+            teams = game.getTeams();
+            players = game.getPlayers();
+            view.displayTeams(teams);
+
+            while (game.shouldContinue()) {
+                playHand();
+            }
+
+            Team gameWinner = game.getGameWinner();
+            view.displayGameWinner(gameWinner, teams);
+            view.displayMessage("Thank you for playing! Would you like to play again?");
+            String continueChoice = (String) view.getChoiceFromOptions(new String[] {"Yes", "No"});
+            if(continueChoice.equals("No")) {
+                continuePlaying = false;
+            }
         }
-
-        //TODO: add print winner message once a team reaches 10 points
-
-        //TODO: add thanks for playing message + ask if they'd like to play again
     }
 
     private int getNumberOfHumanPlayers() {
@@ -195,8 +203,13 @@ public class EuchreCLI {
             else {
                 view.displayMessage("\nYour turn, " + currentPlayer.getName());
                 if(!cardsInPlay.isEmpty()) {
-                    // TODO: Fix so that if leading card is left hand jack, it displays trump suit as leading suit
-                    view.displayMessage(trick.getLeadingSuit() + " led, so if you have any " + trick.getLeadingSuit() + " you must play one.");
+                    String leadingSuit = trick.getLeadingSuit();
+                    String leadingRank = trick.getLeadingCard().getRank();
+                    // If leading card is the left hand Jack, display trump as the leading suit
+                    if(leadingSuit.equals(Card.getLeftHandSuit(hand.getTrump())) && leadingRank.equals("Jack")) {
+                        leadingSuit = hand.getTrump();
+                    }
+                    view.displayMessage(leadingSuit + " led, so if you have any " + leadingSuit + " you must play one.");
                 }
                 view.displayAllCardsPlayed(cardsInPlay);
                 view.displayTeammate(currentPlayer, teams);

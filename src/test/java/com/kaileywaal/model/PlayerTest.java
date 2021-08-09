@@ -10,8 +10,6 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-// FIXME : fix tests
-
 public class PlayerTest {
     private final Player PLAYER = new HumanPlayer("Test");
 
