@@ -1,10 +1,9 @@
 # Euchre
 If you aren't familiar with Euchre, it is a four player trick-taking card game (similar to Bridge). You can read the official rules of Euchre [here.](https://bicyclecards.com/how-to-play/euchre/)
 
-## An Overview
 This project allows you to select the number of players who wish to play and play a full game of Euchre in the command line. If less than 4 players are playing, the remaining players will be computer players. Users can select what action they want to take from a menu that displays valid choices according to Euchre rules. The game continues until a team wins, at which point the player(s) can decide if they wish to play again.
 
-## The Implementation
+## An Overview
 Users are able to:
 - Select the number of players who wish to play against the computer
 - View their cards and decide whether they want the dealer to pick up the top card or pass
