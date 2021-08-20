@@ -89,11 +89,11 @@ public class GameView {
         }
         if(trump == null) {
             out.println(player.getName() + " passed.");
-            out.flush();
         } else {
             out.println(player.getName() + " called " + trump + ".");
             out.println(trump + " is now trump.\n");
         }
+        out.flush();
     }
 
     public void displayCardPlayedByPlayer(Player player, Card cardPlayed) {
@@ -150,6 +150,7 @@ public class GameView {
         delay();
         out.println("\n" +winningTeam.getName() + " won the hand with " + numberOfTricksWon + " tricks won.");
         out.println("Since " + caller + " called trump, " + winningTeam.getName() + " earned " + points + " points.\n");
+        out.flush();
     }
 
     public void displayScoreUpdate(Team[] teams) {
@@ -167,6 +168,7 @@ public class GameView {
         else {
             out.println("Both teams are tied with a score of " + team1Score + "\n");
         }
+        out.flush();
     }
 
     public void displayTeams(Team[] teams){
@@ -199,6 +201,7 @@ public class GameView {
         out.println("Final Score: ");
         out.println(teams[0] + ": " + teams[0].getScore());
         out.println(teams[1] + ": " + teams[1].getScore());
+        out.flush();
     }
 
     private void delay() {
